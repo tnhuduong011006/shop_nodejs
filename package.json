@@ -1,0 +1,33 @@
+{
+  "name": "shop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start" : "nodemon --inspect index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tnhuduong011006/shop_nodejs.git"
+  },
+  "keywords": [
+    "the",
+    "commerce",
+    "shop",
+    "store",
+    "commerce"
+  ],
+  "author": "nhuduong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tnhuduong011006/shop_nodejs/issues"
+  },
+  "homepage": "https://github.com/tnhuduong011006/shop_nodejs#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
