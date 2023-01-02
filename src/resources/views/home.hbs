@@ -1,0 +1,40 @@
+<div class="row">
+	<div class="item2 ms-4 col">
+		<div class="list-group">
+			<a href="#" class="list-group-item list-group-item-action active" aria-current="true">Danh mục
+			</a>
+			<c:forEach items="${dsl}" var="o">
+			  	<a href="loai?maloai=${o.maloai}" class="list-group-item list-group-item-action">${o.tenloai}</a>
+			</c:forEach>
+			  	
+			  
+		</div>
+	</div>
+	<div class="item3 col">
+	    <div class="me-4 row">
+	    	<div class="shop" id="shop">
+			    <c:forEach items="${ds}" var="o">
+					<div class="card" style="width: 100%;">
+						<div>
+							<img src="${o.url}" class="card-img-top" alt="...">
+						</div>
+						  
+						<div class="card-body">
+						    <h5 class="card-title">${o.tenhang}</h5>
+							<div class="d-flex flex-row justify-content-between">
+								<div>
+									<p class="btn btn-danger">${o.gia}₫</p>
+								</div>
+								<div>
+									<a href="#" class="btn btn-success">Thêm</a>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</c:forEach>
+			</div>
+	    </div>
+		
+	</div>
+</div>
