@@ -7,6 +7,17 @@ const { extname } = require('path')
 const app = express()
 const port = 3000
 
+// Trỏ vào thư mục chương trình sẽ tự hiểu và trỏ vào file js
+const route = require('./routes')
+
+// Middleware sử dụng cho form
+app.use(express.urlencoded({
+  extended : true // option của thư viện
+}))
+// Middleware sử dụng cho thư viện trong JS, code JS
+// vd thư viện: XMLHttpRequest, fetch, axios, ...
+app.use(express.json())
+
 // static file: image, css
 app.use(express.static(path.join(__dirname,'public')))
 
@@ -18,20 +29,8 @@ app.engine('hbs', handlebars.engine({extname: '.hbs'}));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname,'resources/views'));
 
-// route
-app.get('/', (req, res) => {
-  res.render('home');
-})
-
-// route
-app.get('/sign_in', (req, res) => {
-  res.render('signin');
-})
-
-// route
-app.get('/sign_up', (req, res) => {
-  res.render('signup');
-})
+// Routes init
+route(app);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
