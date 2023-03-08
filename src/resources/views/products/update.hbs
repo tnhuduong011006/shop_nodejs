@@ -1,0 +1,74 @@
+<div class="mt-4">
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Tên</th>
+            <th scope="col">Giá</th>
+            <th scope="col">Thông tin sản phẩm</th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody">
+            {{#each products}}
+                <tr>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>{{this.ten}}</td>
+                <td>{{convert this.gia}}₫</td>
+                <td><img src="{{this.url}}" width="128px" alt="{{this.ten}}">
+                    {{{this.mo_ta}}}
+                </td>
+                <td>
+                    <div class="d-flex justify-content-between">
+                        <a href="/products/{{this.id}}/edit" class="btn btn-link">Sửa</a>
+                        <a href="" id="delete-product" class="btn btn-link" data-id="{{this.id}}" data-bs-toggle="modal" data-bs-target="#delete-product-model">Xóa</a>
+
+                    </div>
+                </td>
+                </tr>
+            {{/each}}
+
+        </tbody>
+    </table>
+</div>
+
+{{!-- Confirm delete product --}}
+<div class="modal fade" tabindex="-1" id="delete-product-model" aria-labelledby="delete-product-model" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xóa sản phẩm</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có chắc chắn xóa sản phẩm này không ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button id="btn-delete-product" type="button" class="btn btn-danger">Xóa bỏ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- Delete form hidden --}}
+<form name="delete-product-form" method="POST">
+</form>
+
+
+<script>
+    var deleteModal = document.getElementById('delete-product-model')
+    var productId
+    var deleteForm = document.forms["delete-product-form"]
+    var btnDeleteProduct = document.getElementById("btn-delete-product")
+
+    deleteModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        productId = button.getAttribute('data-id');
+    })
+
+    btnDeleteProduct.onclick = function () {
+        deleteForm.action='/products/'+ productId +'?_method=DELETE';
+        deleteForm.submit();
+    }
+</script>

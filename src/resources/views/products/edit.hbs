@@ -1,0 +1,34 @@
+<div class="container col-lg-6 mb-3">
+    <div class="mt-4 row justify-content-center bg-light">
+
+        <form action="/products/{{product.id}}?_method=PUT" class="pt-4" method="POST">
+            <h3 class="mb-3">Cập nhật sản phẩm</h3>
+            <div class="mb-3">
+                <label for="ten" class="form-label">Tên sản phẩm</label>
+                <input type="text" class="form-control" id="ten" name="ten" value="{{product.ten}}">
+            </div>
+            <div class="mb-3">
+                <label for="gia" class="form-label">Giá</label>
+                <input type="text" class="form-control" id="gia"  name="gia" value="{{product.gia}}">
+            </div>
+            <div class="mb-3">
+                <label for="loai" class="form-label">Loại sản phẩm</label>
+                <input type="text" class="form-control" id="loai" name="loai" value="{{product.loai}}">
+            </div>
+            <div class="mb-3">
+                <label for="url" class="form-label">Url</label>
+                <input type="text" class="form-control" id="url" name="url" value="{{product.url}}">
+            </div>
+            <div class="mb-3">
+                <label for="mo_ta" class="form-label">Mô tả</label>
+                <textarea class="form-control" id="mo_ta" name="mo_ta">{{product.mo_ta}}</textarea>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-success">Lưu sản phẩm</button>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+

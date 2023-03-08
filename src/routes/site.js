@@ -3,11 +3,11 @@
 const express = require('express')
 const router = express.Router()
 
-const userController = require('../app/controllers/SiteController')
+const siteController = require('../app/controllers/SiteController')
 
-router.use('/search', userController.search)
+router.get('/search', siteController.search)
 
 // Tuyến đường đầu tiên khi truy xuất vào /+ ...
-router.use('/', userController.home)
+router.get('/', siteController.home)
 
 module.exports = router

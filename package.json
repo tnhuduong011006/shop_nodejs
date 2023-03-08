@@ -27,11 +27,14 @@
   "homepage": "https://github.com/tnhuduong011006/shop_nodejs#readme",
   "dependencies": {
     "express": "^4.18.2",
-    "express-handlebars": "^6.0.6"
+    "express-handlebars": "^6.0.6",
+    "method-override": "^3.0.0",
+    "mongoose": "^6.8.2",
+    "mongoose-slug-generator": "^1.0.4"
   },
   "devDependencies": {
     "morgan": "^1.10.0",
-    "node-sass": "^5.0.0",
+    "node-sass": "^6.0.1",
     "nodemon": "^2.0.20"
   }
 }

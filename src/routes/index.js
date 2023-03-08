@@ -1,11 +1,11 @@
-const userRouter = require('./user')
 const siteRouter = require('./site')
+const productRouter = require('./product')
 
 
 function route(app) {
 
     // route
-    app.use('/user', userRouter)
+    app.use('/products', productRouter)
 
     // route
     app.use('/', siteRouter)
