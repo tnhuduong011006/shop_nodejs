@@ -1,7 +1,8 @@
 const Product = require("../models/Product")
-const Type = require("../models/Type")
+const Type = require("../models/Type").Type
 const {mongooseToOject} = require("../../util/mongoose")
 const {mutilpleMongooseToObject} = require("../../util/mongoose")
+var ObjectID=require("mongodb").ObjectId
 
 class ProductController {
 
@@ -21,19 +22,33 @@ class ProductController {
 
     // [GET] /products/create
     create(req, res, next) {
-
-        res.render('products/create')
-    }
-
-    // [GET] /products/:id/edit
-    edit(req, res, next) {
-        Product.findOne({id: req.params.id})
-        .then(product =>{
-            res.render('products/edit', {
-                product: mongooseToOject(product)
+        Type.find({})
+        .then(types =>{
+            res.render('products/create',{
+                types : mutilpleMongooseToObject(types)
             })
         })
+    }
+
+    // [GET] /products/:_id/edit
+    edit(req, res, next) {
+        // Truy xuất tất cả tên loại
+        Product.findOne({_id: req.params.id})
+        .then(product =>
+            Type.find({})
+                .then(Types =>{
+                     // Tìm tên loại thông qua mã loại trong sản phẩm
+                    res.render('products/edit', {
+                        product: mongooseToOject(product),
+                        types: mutilpleMongooseToObject(Types)
+                    })
+                })
+                .catch(next)               
+                 
+        )
+            // Đưa lỗi vào biến next
         .catch(next)
+        
     }
 
     // [GET] /products/update
@@ -41,6 +56,7 @@ class ProductController {
         Product.find({})
             // Thành công đưa kết quả vào Products
             .then(Products =>{
+
                 res.render('products/update', {
                     //Cú pháp Handlebarsjs
                     products: mutilpleMongooseToObject(Products)       
@@ -53,7 +69,7 @@ class ProductController {
 
     // [DELETE] /products/:id
     delete(req, res, next) {
-        Product.deleteOne({id : req.params.id})
+        Product.deleteOne({_id : req.params.id})
             .then(() => res.redirect('back'))
             .catch(next)
 
@@ -61,23 +77,49 @@ class ProductController {
 
     // [POST] /products/store
     store(req, res, next) {
-        const product = new Product(req.body)
+        console.log(req.body)
+
+        
         // Call-back để biết lưu thành công
         // Product.save() là được
-        product.save()
-            // Dùng promise để biết khi nào lưu xong
-            .then(() => res.redirect('/'))
-            .catch(error => {
+        Type.find({_id : req.body.id_loai})
+            .then(type =>{
+                req.body.loai = {_id : type[0]._id, name: type[0].name}
+                const product = new Product({_id: req.params.id,
+                    ten:  req.body.ten, // String is shorthand for {type: String}
+                    gia: req.body.gia,
+                    loai: req.body.loai,
+                    url: req.body.url,
+                    mo_ta: req.body.mo_ta})
+                console.log(req.body)
 
-            })
+                product.save()
+                    // Dùng promise để biết khi nào lưu xong
+                    .then(() => res.redirect('/'))
+                    .catch(error => {
 
+                    })
+            }
+            ).catch(next)
+    
     }
 
-    // [PUT] /products/:id
+    // [PUT] /products/:_id
     updateProduct(req, res, next) {
-        Product.updateOne({id : req.params.id}, req.body)
-            .then(() => res.redirect('/products/update'))
-            .catch(next)
+        Type.find({_id : req.body.id_loai})
+            .then(type =>{
+                req.body.loai = new Type({_id : type[0]._id, name: type[0].name})
+                Product.updateOne({_id : req.params.id}, {
+                        ten:  req.body.ten,
+                        gia: req.body.gia,
+                        loai: req.body.loai,
+                        url: req.body.url,
+                        mo_ta: req.body.mo_ta
+                })
+                    .then(() => res.redirect('/products/update'))
+                    .catch(next)
+            }
+            ).catch(next)
 
     }
 
@@ -87,29 +129,27 @@ class ProductController {
 
         Type.find({})
             // Thành công đưa kết quả vào Products
-            .then(Types =>
-                res.render('products/filter', {
-                    //Cú pháp Handlebarsjs
-                    types: mutilpleMongooseToObject(Types)            
-                })
-            )
+            .then(Types =>{
+
+                Type.find({_id : req.params.id})
+                    .then(type =>{
+                    
+                        Product.aggregate()
+                            .match({'loai._id': type[0]._id})
+                            .then(Products => {
+                                res.render('home', {
+                                    products: Products,
+                                    types: mutilpleMongooseToObject(Types)               
+                                })
+                            })
+                            .catch(next) 
+
+                    })
+                    .catch(next)
+            })
             // Đưa lỗi vào biến next
             .catch(next)
 
-    }
-
-    showType(req, res, next) {
-
-        //Lấy tham số trên url để đối chiếu với products
-        req.params.slug
-        Product.find({loai: req.params.id})
-            .then(Products => {
-                res.render('products/filter', {
-                    products: mutilpleMongooseToObject(Products)                 
-                })
-            })
-            .catch(next)
-           
     }
 
 }

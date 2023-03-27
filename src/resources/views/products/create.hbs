@@ -4,8 +4,18 @@
         <form action="/products/store" class="pt-4" method="POST">
             <h3 class="mb-3">Đăng sản phẩm</h3>
             <div class="mb-3">
-                <label for="id" class="form-label">Mã sản phẩm</label>
-                <input type="text" class="form-control" id="id" name="id">
+                <label for="_id" class="form-label">Mã sản phẩm</label>
+                <input type="text" class="form-control" id="_id" name="_id">
+            </div>
+            <div class="mb-3">
+                <label for="id_loai" class="form-label">Loại sản phẩm</label>
+                <select id="id_loai" name="id_loai" class="form-select" aria-label="Default select example">
+                    <option disabled selected value> -- Chọn loại -- </option>
+                    {{#each types}}
+                        <option value="{{this._id}}">{{this.name}}</option>
+					{{/each}}
+                    
+                </select>
             </div>
             <div class="mb-3">
                 <label for="ten" class="form-label">Tên sản phẩm</label>
@@ -14,10 +24,6 @@
             <div class="mb-3">
                 <label for="gia" class="form-label">Giá</label>
                 <input type="text" class="form-control" id="gia"  name="gia">
-            </div>
-            <div class="mb-3">
-                <label for="loai" class="form-label">Loại sản phẩm</label>
-                <input type="text" class="form-control" id="loai" name="loai">
             </div>
             <div class="mb-3">
                 <label for="url" class="form-label">Url</label>

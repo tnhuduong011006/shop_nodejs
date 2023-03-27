@@ -1,0 +1,17 @@
+<div class="container col-lg-6 mb-5">
+    <div class="mt-4 row justify-content-center bg-light">
+
+        <form action="/types/{{type._id}}?_method=PUT" class="pt-4" method="POST">
+            <h3 class="mb-3">Cập nhật loại sản phẩm</h3>
+            <div class="mb-3">
+                <label for="name" class="form-label">Tên loại</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{type.name}}">
+            </div>
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-success">Lưu loại sản phẩm</button>
+            </div>
+        </form>
+
+    </div>
+
+</div>

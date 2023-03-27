@@ -1,0 +1,72 @@
+<div class="mt-4">
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Tên</th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody">
+            {{#each types}}
+                <tr>
+                <th scope="row">{{sum @index 1}}</th>
+                <td id="name">{{this.name}}
+                </td>
+                <td>
+                    <div class="d-flex justify-content-end">
+                        <a href="/types/{{this._id}}/edit" class="btn btn-link">Sửa</a>
+                        <a href="" id="delete-type" class="btn btn-link" name="{{this.name}}" data-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#delete-type-model">Xóa</a>
+
+                    </div>
+                    
+                </td>
+                </tr>
+            {{/each}}
+
+        </tbody>
+    </table>
+</div>
+
+{{!-- Confirm delete type --}}
+<div class="modal fade" tabindex="-1" id="delete-type-model" aria-labelledby="delete-type-model" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xóa sản phẩm</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn chắc chắn xóa loại sản phẩm <b id="changeText"></b> này không ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button id="btn-delete-type" type="button" class="btn btn-danger">Xóa bỏ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- Delete form hidden --}}
+<form name="delete-type-form" method="POST">
+</form>
+
+
+<script>
+    var deleteModal = document.getElementById('delete-type-model')
+    var typeId
+    var deleteForm = document.forms["delete-type-form"]
+    var btnDeletetype = document.getElementById("btn-delete-type")
+
+    deleteModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        typeId = button.getAttribute('data-id');
+        var typeName = button.getAttribute('name');
+        var setText = document.getElementById('changeText').innerText = typeName
+    })
+
+    btnDeletetype.onclick = function () {
+        deleteForm.action='/types/'+ typeId +'?_method=DELETE';
+        deleteForm.submit();
+    }
+</script>

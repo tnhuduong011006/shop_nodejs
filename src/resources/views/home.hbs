@@ -1,13 +1,13 @@
 <div class="mt-3">
 	<div class="row">
-		<div class="col-lg-3 mt-2 mb-4">
+		<div class="col-lg-3 mt-5 mb-4">
 
 				<div class="list-group">
-					<a href="/products/filter" class="list-group-item list-group-item-action active" aria-current="true">
+					<a href="#" class="list-group-item list-group-item-action active" aria-current="true">
 						Danh mục sản phẩm
 					</a>
 					{{#each types}}
-						<a href="/products/filter/{{this.id}}" class="list-group-item list-group-item-action">{{this.name}}</a>
+						<a href="/products/filter/{{this._id}}" class="list-group-item list-group-item-action">{{this.name}}</a>
 					{{/each}}
   
 				</div>
